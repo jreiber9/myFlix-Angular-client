@@ -13,9 +13,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
+import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
 
 @NgModule({
-  declarations: [AppComponent, UserRegistrationFormComponent],
+  declarations: [
+    AppComponent,
+    UserRegistrationFormComponent,
+    UserLoginFormComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
