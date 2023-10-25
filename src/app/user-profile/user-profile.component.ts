@@ -12,14 +12,6 @@ import { Router } from '@angular/router';
 
 import { formatDate } from '@angular/common';
 
-type User = {
-  _id?: string;
-  Username?: string;
-  Password?: string;
-  Email?: string;
-  FavoriteMovies?: [];
-};
-
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -47,7 +39,7 @@ export class UserProfileComponent implements OnInit {
    * gets the user's account info and favorite movies from the api
    */
   getUser(): void {
-    this.fetchApiData.getOneUser().subscribe((user: any) => {
+    this.fetchApiData.getUser().subscribe((user: any) => {
       console.log(user);
       this.userData.Username = user.Username;
       this.userData.Email = user.Email;

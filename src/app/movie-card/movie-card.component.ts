@@ -41,7 +41,7 @@ export class MovieCardComponent implements OnInit {
    * fetches the user's info from the api
    */
   getUser(): void {
-    this.fetchApiData.getOneUser().subscribe((resp: any) => {
+    this.fetchApiData.getUser().subscribe((resp: any) => {
       this.user = resp;
       console.log(this.user);
       return this.user;
