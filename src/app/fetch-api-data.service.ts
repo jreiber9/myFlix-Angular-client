@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import {
@@ -83,7 +85,7 @@ export class FetchApiDataService {
   }
 
   // Making api call to get user enpoint
-  getUser(): Observable<any> {
+  getOneUser(): Observable<any> {
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');
     return this.http
@@ -97,10 +99,10 @@ export class FetchApiDataService {
 
   // Making api call to get favorite movies for a user endpoint
   getFavoriteMovies(): Observable<any> {
-    const username = localStorage.getItem('username');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + '/users/' + username, {
+      .get(apiUrl + 'users/' + user.Username, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
@@ -114,15 +116,25 @@ export class FetchApiDataService {
 
   // Making api call to add movie to favorites endpoint
   addFavoriteMovie(movieId: string): Observable<any> {
-    const username = localStorage.getItem('username');
+    const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     return this.http
-      .post(apiUrl + '/users/' + username + '/movies/' + movieId, {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
-        }),
-      })
+      .post(
+        apiUrl + 'users/' + username + '/movies/' + movieId,
+        {},
+        {
+          headers: new HttpHeaders({
+            Authorization: 'Bearer ' + token,
+          }),
+        }
+      )
       .pipe(map(this.extractResponseData), catchError(this.handleError));
+  }
+
+  // confirming favorite movie has movieId
+  isFavoriteMovie(movieId: string): boolean {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.FavoriteMovies.indexOf(movieId) >= 0;
   }
 
   // Making api call to edit user endpoint
@@ -153,10 +165,10 @@ export class FetchApiDataService {
 
   // Making api call to delete a movie from favorties endpoint
   deleteFavoriteMovie(movieId: string): Observable<any> {
-    const username = localStorage.getItem('username');
+    const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     return this.http
-      .delete(apiUrl + '/users/' + username + '/movies/' + movieId, {
+      .delete(apiUrl + 'users/' + username + '/movies/' + movieId, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
@@ -165,7 +177,7 @@ export class FetchApiDataService {
   }
 
   // Non-typed response extraction
-  private extractResponseData(res: Object): any {
+  private extractResponseData(res: any): any {
     const body = res;
     return body || {};
   }
@@ -173,11 +185,15 @@ export class FetchApiDataService {
   private handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
       console.error('Some error occurred:', error.error.message);
+    } else if (error.error.errors) {
+      return throwError(() => new Error(error.error.errors[0].msg));
     } else {
       console.error(
         `Error Status code ${error.status}, ` + `Error body is: ${error.error}`
       );
     }
-    return throwError('Something bad happened; please try again later.');
+    return throwError(
+      () => new Error('Something bad happened; please try again later.')
+    );
   }
 }

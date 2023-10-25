@@ -1,0 +1,54 @@
+<app-top-bar></app-top-bar>
+<div class="profile" style="padding: 1rem">
+  <h1>Profile</h1>
+  <p>Username: {{ user.Username }}</p>
+  <p>Email: {{ user.Email }}</p>
+
+  <h2>Favorite Movies</h2>
+  <mat-list class="favorite-movies">
+    <mat-list-item *ngFor="let movie of favoriteMovies">
+      <!-- <img matListItemAvatar src="{{ movie.ImagePath }}" /> -->
+      <div matListItemTitle class="movie-title">{{ movie.Title }}</div>
+      <div matListItemLine class="movie-director">
+        {{ movie.Director.Name }}
+      </div>
+    </mat-list-item>
+  </mat-list>
+
+  <h2>Update Profile</h2>
+  <form>
+    <mat-form-field class="form-input">
+      <input
+        matInput
+        [(ngModel)]="userData.Password"
+        minlength="8"
+        type="password"
+        placeholder="Enter Password"
+        name="Password"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="form-input">
+      <input
+        matInput
+        [(ngModel)]="userData.Email"
+        type="email"
+        placeholder="Email"
+        name="Email"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="form-input">
+      <input
+        matInput
+        [(ngModel)]="userData.Birthday"
+        type="date"
+        placeholder="Birthday"
+        name="Birthday"
+      />
+    </mat-form-field>
+  </form>
+  <button mat-raised-button (click)="editUser()" class="button">Update</button>
+
+  <button mat-button (click)="deleteUser()" color="warn">Delete Account</button>
+</div>

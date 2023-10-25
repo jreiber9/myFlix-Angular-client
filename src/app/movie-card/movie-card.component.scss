@@ -1,0 +1,27 @@
+.movie-card {
+  align-items: center;
+  height: 800px;
+  max-width: 465px;
+  background-color: rgb(27, 34, 74);
+  border-width: 1px;
+  border-color: rgb(20, 25, 55);
+  border-radius: 0px;
+  margin: 4px;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  .movie-card-header {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    .movie-title {
+      color: whitesmoke;
+      font-size: x-large;
+    }
+    .movie-director {
+      color: rgba(245, 245, 245, 0.843);
+      font-size: larger;
+    }
+    .favorite-icon {
+      color: rgb(249, 65, 111);
+    }
+  }
+}
