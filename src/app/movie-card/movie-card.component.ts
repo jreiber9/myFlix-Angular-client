@@ -37,9 +37,6 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  /**
-   * fetches the user's info from the api
-   */
   getUser(): void {
     this.fetchApiData.getOneUser().subscribe((resp: any) => {
       this.user = resp;
@@ -75,10 +72,6 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  /**
-   * adds the movie (by id) to an array of the user's favorite movies
-   * @param id movie id
-   */
   addFavorite(id: string): void {
     this.fetchApiData.addFavoriteMovie(id).subscribe((result) => {
       this.snackBar.open('Movie added to favorites.', 'OK', {
@@ -88,19 +81,10 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  /**
-   * checks if the movie id is in the user's favorite movie array
-   * @param id movie id
-   * @returns true or false
-   */
   isFavorite(id: string): boolean {
     return this.user?.FavoriteMovies.includes(id);
   }
 
-  /**
-   * removes the movie (by id) from the user's array of favorite movies
-   * @param id movie id
-   */
   removeFavorite(id: string): void {
     this.fetchApiData.deleteFavoriteMovie(id).subscribe((result) => {
       this.snackBar.open('Movie removed from favorites.', 'OK', {
