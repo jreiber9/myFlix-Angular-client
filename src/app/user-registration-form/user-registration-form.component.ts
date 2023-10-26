@@ -1,3 +1,5 @@
+/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
+/* eslint-disable @typescript-eslint/no-empty-function */
 // src/app/user-registration-form/user-registration-form.component.ts
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -26,11 +28,15 @@ export class UserRegistrationFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // This is the function responsible for sending the form inputs to the backend
+  /**
+   * This is the function responsible for sending the form inputs to the backend
+   */
   registerUser(): void {
     this.fetchApiData.userRegistration(this.userData).subscribe(
       (response) => {
-        // Logic for a successful user registration goes here! (To be implemented)
+        /**
+         * Logic for a successful user registration goes here! (To be implemented)
+         */
         console.log(response);
         this.dialogRef.close(); // This will close the modal on success!
         this.snackBar.open(response, 'OK', {

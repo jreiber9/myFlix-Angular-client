@@ -20,7 +20,12 @@ export class FetchApiDataService {
   // This will provide HttpClient to the entire class, making it available via this.http
   constructor(private http: HttpClient) {}
 
-  // Making the api call for the user registration endpoint
+  /**
+   * Making the api call for the user registration endpoint
+   * @param userDetails
+   * @returns a registered user
+   * used in user-registration-form.components.ts
+   */
   public userRegistration(userDetails: any): Observable<any> {
     console.log(userDetails);
     return this.http
@@ -28,7 +33,12 @@ export class FetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  // Making api call to user login endpoint
+  /**
+   * Making api call to user login endpoint
+   * @param userDetails
+   * @returns logins the user with a token to land on /movies
+   * used in user-login-form.components.ts
+   */
   public userLogin(userDetails: any): Observable<any> {
     console.log(userDetails);
     return this.http
@@ -36,7 +46,11 @@ export class FetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  // Making api call to get all movies endpoint
+  /**
+   * Making api call to get all movies endpoint
+   * @returns array of movies
+   * used in movie-card-component.ts
+   */
   getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
@@ -48,7 +62,12 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  // Making api call to get one movie endpoint
+  /**
+   * Making api call to get one movie endpoint
+   * @param title of one movie
+   * @returns movie details
+   * used in movie-card-component.ts
+   */
   getOneMovie(title: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
@@ -60,7 +79,12 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  // Making api call to get director endpoint
+  /**
+   * Making api call to get director endpoint
+   * @param directorName of director associated with movie
+   * @returns director details
+   * used in movie-info-component.ts
+   */
   getDirector(directorName: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
@@ -72,7 +96,12 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  // Making api call to get genre endpoint
+  /**
+   * Making api call to get genre endpoint
+   * @param genreName of genre associated with movie
+   * @returns genre details
+   * used in movie-info-component.ts
+   */
   getGenre(genreName: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
@@ -84,7 +113,11 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  // Making api call to get user enpoint
+  /**
+   * Making api call to get user enpoint
+   * @returns user details
+   * used in movie-card-component.ts
+   */
   getOneUser(): Observable<any> {
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');
@@ -97,7 +130,12 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  // Making api call to get favorite movies for a user endpoint
+  /**
+   * Making api call to get favorite movies for a user endpoint
+   * @returns array of users favorite movies
+   * used in movie-card-component.ts
+   * used in user-profile-component.ts
+   */
   getFavoriteMovies(): Observable<any> {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = localStorage.getItem('token');
@@ -114,7 +152,12 @@ export class FetchApiDataService {
       );
   }
 
-  // Making api call to add movie to favorites endpoint
+  /**
+   * Making api call to add movie to favorites endpoint
+   * @param movieId
+   * @returns user favorited
+   * used in movie-card-component.ts
+   */
   addFavoriteMovie(movieId: string): Observable<any> {
     const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
@@ -131,13 +174,23 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  // confirming favorite movie has movieId
+  /**
+   * confirming favorite movie has movieId
+   * @param movieId
+   * @returns if user has movie favorited
+   * used in movie-card-component.ts
+   */
   isFavoriteMovie(movieId: string): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.FavoriteMovies.indexOf(movieId) >= 0;
   }
 
-  // Making api call to edit user endpoint
+  /**
+   * Making api call to edit user endpoint
+   * @param updatedUser pass new user info
+   * @returns updated user info
+   * used in user-profile-component.ts
+   */
   editUser(updatedUser: any): Observable<any> {
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');
@@ -150,7 +203,11 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  // Making api call to delete user endpoint
+  /**
+   * Making api call to delete user endpoint
+   * @returns userId is deleted
+   * used in user-profile-component.ts
+   */
   deleteUser(): Observable<any> {
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
@@ -163,7 +220,13 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  // Making api call to delete a movie from favorties endpoint
+  /**
+   * Making api call to delete a movie from favorties endpoint
+   * @param movieId
+   * @returns removes movie from user
+   * used in movie-card-component.ts
+   * used in user-profile-component.ts
+   */
   deleteFavoriteMovie(movieId: string): Observable<any> {
     const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
