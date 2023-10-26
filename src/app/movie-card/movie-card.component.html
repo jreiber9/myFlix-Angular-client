@@ -28,7 +28,9 @@
       >
         Synopsis
       </button>
-      <mat-icon>favorite_border</mat-icon>
+      <button mat-button (click)="openSynopsisDialog(movie.Description)">
+        <mat-icon>favorite_border</mat-icon>
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>
